@@ -38,22 +38,28 @@ class RouteTest extends TestCase
      */
     protected function getEnvironmentSetUp($app)
     {
+        putenv('QUEUE_DRIVER=database');
+
         $app['config']->set('queue-ui.route_middleware', null);
-        $app['config']->set('queue-ui.command_whitelist', ['cache:clear']);
+        $app['config']->set('queue-ui.command_whitelist', ['cache:clear' => ['label' => 'Clear Cache']]);
     }
 
     /** @test */
     public function it_can_load_the_index_page()
     {
+        $this->withoutExceptionHandling();
         DB::shouldReceive('table')
             ->once()
             ->with('jobs')
             ->andReturnSelf();
         DB::shouldReceive('links')
-            ->once()
+            ->times(2)
             ->andReturnSelf();
         DB::shouldReceive('count')
-            ->once()
+            ->times(1)
+            ->andReturn(1);
+        DB::shouldReceive('total')
+            ->times(2)
             ->andReturn(1);
         DB::shouldReceive('paginate')
             ->once()
@@ -66,15 +72,16 @@ class RouteTest extends TestCase
     /** @test */
     public function it_can_run_a_command()
     {
+        // $this->withoutExceptionHandling();
         $this->withSession([]);
 
         Artisan::shouldReceive('call')
             ->once()
-            ->with('cache:clear', null)
+            ->with('cache:clear')
             ->andReturn(0);
         $response = $this->call('GET', route('queue-ui.run'), [
             'command' => 'cache:clear',
-            'arguments' => [],
+            'arguments' => '',
         ]);
         $response
             ->assertStatus(302);
@@ -83,11 +90,12 @@ class RouteTest extends TestCase
     /** @test */
     public function it_cannot_run_a_command()
     {
+        // $this->withoutExceptionHandling();
         $this->withSession([]);
 
         $response = $this->call('GET', route('queue-ui.run'), [
             'command' => 'view:clear',
-            'arguments' => [],
+            'arguments' => '',
         ]);
         $response
             ->assertStatus(302);

@@ -33,12 +33,14 @@ class QueueUiController extends Controller
      */
     public function run(RunRequest $request)
     {
-        $exitCode = Artisan::call($request->input('command'), $request->input('arguments', null));
+        $exitCode = Artisan::call(trim(implode(' ', [
+            $request->input('command'),
+            $request->input('arguments', ''),
+        ])));
 
-        $status = $exitCode < 1 ? 'success' : 'error';
         $message = $exitCode < 1 ? 'Task was successful' : 'There was an error running the task';
 
-        Session::flash($status, $message);
+        Session::flash('status', $message);
 
         return back();
     }

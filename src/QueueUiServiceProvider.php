@@ -3,6 +3,7 @@
 namespace EngineDigital\QueueUi;
 
 use Illuminate\Support\ServiceProvider;
+use Exception;
 
 class QueueUiServiceProvider extends ServiceProvider
 {
@@ -11,23 +12,22 @@ class QueueUiServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (env('QUEUE_DRIVER', 'sync') !== 'database') {
+            throw new Exception('This package only supports the database queue.');
+        }
+
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'queue-ui');
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('queue-ui.php'),
-            ], 'config');
+            ], 'queue-ui-config');
 
             // Publishing the views.
             $this->publishes([
                 __DIR__.'/../resources/views' => resource_path('views/vendor/queue-ui'),
-            ], 'views');
-
-            // Publishing assets.
-            /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/queue-ui'),
-            ], 'assets');*/
+            ], 'queue-ui-views');
         }
     }
 

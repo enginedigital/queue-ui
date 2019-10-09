@@ -1,30 +1,46 @@
-# Very short description of the package
+# Simple Queue View
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/enginedigital/queue-ui.svg?style=flat-square)](https://packagist.org/packages/enginedigital/queue-ui)
-[![Build Status](https://img.shields.io/travis/enginedigital/queue-ui/master.svg?style=flat-square)](https://travis-ci.org/enginedigital/queue-ui)
-[![Quality Score](https://img.shields.io/scrutinizer/g/enginedigital/queue-ui.svg?style=flat-square)](https://scrutinizer-ci.com/g/enginedigital/queue-ui)
-[![Total Downloads](https://img.shields.io/packagist/dt/enginedigital/queue-ui.svg?style=flat-square)](https://packagist.org/packages/enginedigital/queue-ui)
+> View the queue, baby!
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+![example photo](demo.png)
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via composer using the "VCS" link:
 
 ```bash
-composer require enginedigital/queue-ui
+...
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/enginedigital/queue-ui"
+    }
+],
+"minimum-stability": "dev",
+"require": {
+    "enginedigital/queue-ui": "dev-master"
+},
+...
 ```
+
+##### Composer Install
+
+**TODO: publish to packagist**
+
+##### Queue Support
+
+**This only supports the database queue.**
 
 ## Usage
 
-``` php
-// Usage description here
+```bash
+php artisan vendor:publish --tag=queue-ui-config
 ```
 
 ### Testing
 
 ``` bash
-composer test
+composer run test
 ```
 
 ### Changelog
