@@ -16,9 +16,8 @@ You can install the package via composer using the "VCS" link:
         "url": "https://github.com/enginedigital/queue-ui"
     }
 ],
-"minimum-stability": "dev",
 "require": {
-    "enginedigital/queue-ui": "dev-master"
+    "enginedigital/queue-ui": "~1.0.0"
 },
 ...
 ```
