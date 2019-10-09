@@ -43,6 +43,26 @@ php artisan vendor:publish --tag=queue-ui-config
 composer run test
 ```
 
+If you want to try using the package via the cloned repo:
+
+```bash
+...
+"repositories": [
+    {
+        "type": "path",
+        "url": "../path/to/queue-ui",
+        "options": {
+            "symlink": true
+        }
+    }
+],
+"minimum-stability": "dev",
+"require": {
+    "enginedigital/queue-ui": "dev-master"
+},
+...
+```
+
 ### Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
