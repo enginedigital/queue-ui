@@ -38,8 +38,6 @@ class RouteTest extends TestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-        putenv('QUEUE_DRIVER=database');
-
         $app['config']->set('queue-ui.route_middleware', null);
         $app['config']->set('queue-ui.command_whitelist', ['cache:clear' => ['label' => 'Clear Cache']]);
     }
