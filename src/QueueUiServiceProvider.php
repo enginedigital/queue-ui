@@ -12,10 +12,6 @@ class QueueUiServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (env('QUEUE_DRIVER', 'sync') !== 'database') {
-            throw new Exception('This package only supports the database queue.');
-        }
-
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'queue-ui');
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
 
