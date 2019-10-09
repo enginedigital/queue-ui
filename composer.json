@@ -1,0 +1,54 @@
+{
+    "name": "enginedigital/queue-ui",
+    "description": "View the queue, baby!",
+    "keywords": [
+        "enginedigital",
+        "queue-ui"
+    ],
+    "homepage": "https://github.com/enginedigital/queue-ui",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "James Doyle",
+            "email": "james.doyle@enginedigital.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "5.5.*"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.2",
+        "orchestra/testbench": "~3.5.0",
+        "phpunit/phpunit": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "EngineDigital\\QueueUi\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EngineDigital\\QueueUi\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "EngineDigital\\QueueUi\\QueueUiServiceProvider"
+            ],
+            "aliases": {
+                "QueueUi": "EngineDigital\\QueueUi\\QueueUiFacade"
+            }
+        }
+    }
+}
