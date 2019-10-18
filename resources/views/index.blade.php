@@ -3,16 +3,6 @@
 <head>
     <title>Queue Jobs</title>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            new Jets({
-                searchTag: '#jetsSearch',
-                contentTag: '#jetsContent',
-                columns: [2] // search column
-            });
-        });
-    </script>
 </head>
 <body>
 <div class="container">
@@ -42,11 +32,11 @@
             <div class="card mt-4">
                 <div class="card-header">Jobs Dashboard</div>
                 <div class="card-body">
-                    <form>
+                    <form action="{{ url()->current() }}" method="GET" accept-charset="utf-8">
                         <div class="form-group row">
-                            <label for="jetsSearch" class="col-sm-2 col-form-label">Filter:</label>
+                            <label for="filter" class="col-sm-2 col-form-label">Filter:</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="jetsSearch" placeholder="Filter table">
+                                <input type="text" class="form-control" id="filter" name="filter" placeholder="Filter table" value="{{ $filter }}">
                             </div>
                         </div>
                         <div class="form-group row">

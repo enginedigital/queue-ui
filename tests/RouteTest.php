@@ -53,6 +53,9 @@ class RouteTest extends TestCase
         DB::shouldReceive('links')
             ->times(2)
             ->andReturnSelf();
+        DB::shouldReceive('appends')
+            ->once()
+            ->andReturnSelf();
         DB::shouldReceive('count')
             ->times(1)
             ->andReturn(1);
@@ -64,6 +67,38 @@ class RouteTest extends TestCase
             ->with(config('queue-ui.paginate_size'))
             ->andReturnSelf();
         $response = $this->call('GET', route('queue-ui.index'));
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function it_can_load_the_index_page_with_a_filter()
+    {
+        $this->withoutExceptionHandling();
+        DB::shouldReceive('table')
+            ->once()
+            ->with('jobs')
+            ->andReturnSelf();
+        DB::shouldReceive('links')
+            ->times(2)
+            ->andReturnSelf();
+        DB::shouldReceive('appends')
+            ->once()
+            ->andReturnSelf();
+        DB::shouldReceive('where')
+            ->once()
+            ->withArgs(['payload', 'LIKE', '%things%'])
+            ->andReturnSelf();
+        DB::shouldReceive('count')
+            ->times(1)
+            ->andReturn(1);
+        DB::shouldReceive('total')
+            ->times(2)
+            ->andReturn(1);
+        DB::shouldReceive('paginate')
+            ->once()
+            ->with(config('queue-ui.paginate_size'))
+            ->andReturnSelf();
+        $response = $this->call('GET', route('queue-ui.index') . '?filter=things');
         $response->assertStatus(200);
     }
 

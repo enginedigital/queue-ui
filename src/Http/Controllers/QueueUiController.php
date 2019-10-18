@@ -4,6 +4,7 @@ namespace EngineDigital\QueueUi\Http\Controllers;
 
 use EngineDigital\QueueUi\Http\Requests\RunRequest;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -13,14 +14,23 @@ class QueueUiController extends Controller
     /**
      * Show the application index.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $jobs = DB::table('jobs');
 
+        if ($request->filled('filter')) {
+            $jobs->where('payload', 'LIKE', sprintf('%%%s%%', $request->input('filter')));
+        }
+
         return view('queue-ui::index', [
-            'jobs' => config('queue-ui.paginate', true) ? $jobs->paginate(config('queue-ui.paginate_size', 25)) : $jobs->get(),
+            'filter' => $request->input('filter', ''),
+            'jobs' => config('queue-ui.paginate', true)
+                ? $jobs->paginate(config('queue-ui.paginate_size', 25))->appends($request->except('page'))
+                : $jobs->get(),
         ]);
     }
 
