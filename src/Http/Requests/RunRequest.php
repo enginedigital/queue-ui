@@ -24,7 +24,7 @@ class RunRequest extends FormRequest
     public function rules()
     {
         return [
-            'command' => 'required|in:' . implode(',', array_keys(config('queue-ui.command_whitelist', []))),
+            'command' => 'required|in:' . implode(',', array_keys(config('queue-ui.commands', []))),
             'arguments' => 'nullable|array',
         ];
     }

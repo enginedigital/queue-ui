@@ -6,7 +6,7 @@
 </head>
 <body>
 <template>
-    @foreach (config('queue-ui.command_whitelist') as $value => $detail)
+    @foreach (config('queue-ui.commands') as $value => $detail)
         @if (is_array(array_get($detail, 'arguments')))
             <div class="form-group mb-2" id="{{ $value }}">
                 @foreach ($detail['arguments'] as $argument)
@@ -32,7 +32,7 @@
                         <div class="form-group mb-2">
                             <label for="command">Command</label>
                             <select class="form-control" id="command" name="command" placeholder="command">
-                                @foreach (config('queue-ui.command_whitelist') as $value => $detail)
+                                @foreach (config('queue-ui.commands') as $value => $detail)
                                     <option value="{{ $value }}">{{ $detail['label'] }}</option>
                                 @endforeach
                             </select>

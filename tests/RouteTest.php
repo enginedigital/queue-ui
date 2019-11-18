@@ -39,7 +39,10 @@ class RouteTest extends TestCase
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('queue-ui.route_middleware', null);
-        $app['config']->set('queue-ui.command_whitelist', ['cache:clear' => ['label' => 'Clear Cache']]);
+        $app['config']->set('queue-ui.commands', [
+            'cache:clear' => ['label' => 'Clear Cache'],
+            'help' => ['label' => 'Help', 'arguments' => ['--format']],
+        ]);
     }
 
     /** @test */
@@ -115,6 +118,26 @@ class RouteTest extends TestCase
         $response = $this->call('GET', route('queue-ui.run'), [
             'command' => 'cache:clear',
             'arguments' => null,
+        ]);
+        $response
+            ->assertStatus(302);
+    }
+
+    /** @test */
+    public function it_can_run_a_command_with_arguments()
+    {
+        // $this->withoutExceptionHandling();
+        $this->withSession([]);
+
+        Artisan::shouldReceive('call')
+            ->once()
+            ->with('help', ['--format' => 'xml'])
+            ->andReturn(0);
+        $response = $this->call('GET', route('queue-ui.run'), [
+            'command' => 'help',
+            'arguments' => [
+                '--format' => 'xml'
+            ],
         ]);
         $response
             ->assertStatus(302);

@@ -15,7 +15,7 @@ return [
     'paginate_partial' => 'vendor.pagination.bootstrap-4',
     // any commands that are allow to be run from this page
     // these will be validated
-    'command_whitelist' => [
+    'commands' => [
         // example of arguments being used
         // 'help' => [
         //     'label' => 'Help',
