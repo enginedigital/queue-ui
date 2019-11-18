@@ -36,9 +36,13 @@ You can install the package via composer using the "VCS" link:
 php artisan vendor:publish --tag=queue-ui-config
 ```
 
+You can list commands in the config that will populate the dropdown in the UI. If you have arguments, you can pass them as an array. See the default config file for examples.
+
+*Note:* if there are arguments defined, they are marked as `required` fields in the UI.
+
 ### Testing
 
-``` bash
+```bash
 composer run test
 ```
 
