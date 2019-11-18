@@ -114,7 +114,7 @@ class RouteTest extends TestCase
             ->andReturn(0);
         $response = $this->call('GET', route('queue-ui.run'), [
             'command' => 'cache:clear',
-            'arguments' => '',
+            'arguments' => null,
         ]);
         $response
             ->assertStatus(302);
@@ -128,7 +128,7 @@ class RouteTest extends TestCase
 
         $response = $this->call('GET', route('queue-ui.run'), [
             'command' => 'view:clear',
-            'arguments' => '',
+            'arguments' => null,
         ]);
         $response
             ->assertStatus(302);

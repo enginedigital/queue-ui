@@ -16,13 +16,20 @@ return [
     // any commands that are allow to be run from this page
     // these will be validated
     'command_whitelist' => [
+        // example of arguments being used
+        // 'help' => [
+        //     'label' => 'Help',
+        //     'arguments' => [
+        //         '--format',
+        //     ],
+        // ],
         'view:clear' => [
             'label' => 'Clear View',
-            'arguments' => '', // TODO
+            'arguments' => null,
         ],
         'cache:clear' => [
             'label' => 'Clear Cache',
-            'arguments' => '', // TODO
+            'arguments' => null,
         ],
     ],
 ];

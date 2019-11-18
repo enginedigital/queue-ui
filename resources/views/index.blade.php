@@ -5,6 +5,18 @@
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
+<template>
+    @foreach (config('queue-ui.command_whitelist') as $value => $detail)
+        @if (is_array(array_get($detail, 'arguments')))
+            <div class="form-group mb-2" id="{{ $value }}">
+                @foreach ($detail['arguments'] as $argument)
+                    <label for="arguments[{{ $argument }}]">{{ $argument }}</label>
+                    <input type="text" name="arguments[{{ $argument }}]" required>
+                @endforeach
+            </div>
+        @endif
+    @endforeach
+</template>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -25,6 +37,8 @@
                                 @endforeach
                             </select>
                         </div>
+                        {{-- placeholder for additional arguments --}}
+                        <div id="arguments"></div>
                         <button type="submit" class="btn btn-primary mb-2">Run</button>
                     </form>
                 </div>
@@ -92,5 +106,21 @@
         </div>
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const command = document.getElementById('command');
+  const argument = document.getElementById('arguments');
+  command.addEventListener('change', function(e) {
+    const value = this.options[this.selectedIndex].value;
+    const template = document.getElementsByTagName('template')[0];
+    const content = template.content.getElementById(value);
+    argument.innerHTML = content ? content.innerHTML : '';
+  });
+
+  const event = document.createEvent('HTMLEvents');
+  event.initEvent('change', true, false);
+  command.dispatchEvent(event);
+});
+</script>
 </body>
 </html>

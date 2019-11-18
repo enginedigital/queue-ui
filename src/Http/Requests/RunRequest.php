@@ -25,7 +25,7 @@ class RunRequest extends FormRequest
     {
         return [
             'command' => 'required|in:' . implode(',', array_keys(config('queue-ui.command_whitelist', []))),
-            'arguments' => 'nullable|string',
+            'arguments' => 'nullable|array',
         ];
     }
 }
