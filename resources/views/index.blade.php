@@ -10,8 +10,8 @@
         @if (is_array(array_get($detail, 'arguments')))
             <div class="form-group mb-2" id="{{ $value }}">
                 @foreach ($detail['arguments'] as $argument)
-                    <label for="arguments[{{ $argument }}]">{{ $argument }}</label>
-                    <input type="text" name="arguments[{{ $argument }}]" required>
+                    <label for="arguments[{{ $argument }}]" class="col-sm-2 col-form-label"><code>{{ $argument }}</code></label>
+                    <input type="text" name="arguments[{{ $argument }}]" class="form-control col-sm-10" required>
                 @endforeach
             </div>
         @endif
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const value = this.options[this.selectedIndex].value;
     const template = document.getElementsByTagName('template')[0];
     const content = template.content.getElementById(value);
-    argument.innerHTML = content ? content.innerHTML : '';
+    argument.innerHTML = content ? content.outerHTML : '';
   });
 
   const event = document.createEvent('HTMLEvents');
